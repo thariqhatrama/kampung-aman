@@ -25,22 +25,33 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nama')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                // Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
                     ->password()
+                    ->revealable()
                     ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                     ->dehydrated(fn ($state) => filled($state)),
                 Forms\Components\Select::make('roles')
+                    ->label('Tipe User')
                     ->relationship('roles', 'name')
                     ->multiple()
                     ->preload()
                     ->searchable(),
+                Forms\Components\TextInput::make('pekerjaan')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('no_tlp')
+                    ->tel()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('alamat')
+                    ->columnSpanFull()
+                    ->maxLength(255),
             ]);
     }
 
@@ -49,11 +60,19 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nama')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Tipe User')
                     ->badge()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('pekerjaan')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('no_tlp')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('alamat')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
