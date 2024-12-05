@@ -12,6 +12,7 @@
         "filament/spatie-laravel-media-library-plugin": "^3.2",
         "laravel-frontend-presets/tall": "^8.0",
         "laravel/framework": "^11.9",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5"
     },

@@ -10,6 +10,7 @@ use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\EmergencyResource\Pages;
@@ -100,20 +101,24 @@ class EmergencyResource extends Resource
                     })
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->label('Detail'),
-                Action::make('map')
-                    ->label('Lihat')
-                    ->icon('heroicon-o-map-pin')
-                    ->url(fn (Emergency $record) => EmergencyResource::getUrl('map', ['record' => $record])),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make()
+                        ->label('Detail'),
+                    Action::make('map')
+                        ->label('Lihat')
+                        ->icon('heroicon-o-map-pin')
+                        ->url(fn (Emergency $record) => EmergencyResource::getUrl('map', ['record' => $record])),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+                ->button()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('id', 'desc');
     }
 
     public static function getPages(): array

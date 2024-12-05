@@ -10,6 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use App\Models\LaporanKejadianAnonim;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -38,6 +39,9 @@ class LaporanKejadianAnonimResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Select::make('jenis_kejadian_id')
                     ->relationship('jenisKejadian', 'nama')
+                    ->required(),
+                Forms\Components\Select::make('kelurahan_id')
+                    ->relationship('kelurahan', 'nama')
                     ->required(),
                 Forms\Components\Textarea::make('catatan_laporan')
                     ->required()
@@ -96,20 +100,24 @@ class LaporanKejadianAnonimResource extends Resource
                 })
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->label('Detail'),
-                Action::make('map')
-                    ->label('Lihat')
-                    ->icon('heroicon-o-map-pin')
-                    ->url(fn (LaporanKejadianAnonim $record) => LaporanKejadianAnonimResource::getUrl('map', ['record' => $record])),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make()
+                        ->label('Detail'),
+                    Action::make('map')
+                        ->label('Lihat')
+                        ->icon('heroicon-o-map-pin')
+                        ->url(fn (LaporanKejadianAnonim $record) => LaporanKejadianAnonimResource::getUrl('map', ['record' => $record])),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+                ->button()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('id', 'desc');
     }
 
     public static function getPages(): array

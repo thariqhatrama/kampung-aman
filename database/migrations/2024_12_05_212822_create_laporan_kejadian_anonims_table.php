@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Kelurahan;
 use App\Models\JenisKejadian;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->time('jam');
             $table->text('lokasi_kejadian');
             $table->foreignIdFor(JenisKejadian::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Kelurahan::class)->constrained()->cascadeOnDelete();
             $table->text('catatan_laporan');
             $table->string('longitude');
             $table->string('latitude');

@@ -2,17 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\StatusDaerahResource\Pages;
-use App\Filament\Resources\StatusDaerahResource\RelationManagers;
-use App\Models\Kelurahan;
-use App\Models\StatusDaerah;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
+use App\Models\Kelurahan;
 use Filament\Tables\Table;
+use App\Models\StatusDaerah;
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\StatusDaerahResource\Pages;
+use App\Filament\Resources\StatusDaerahResource\RelationManagers;
 
 class StatusDaerahResource extends Resource
 {
@@ -38,13 +39,12 @@ class StatusDaerahResource extends Resource
                     ->columnSpanFull()
                     ->relationship('kejadianStatusDaerah')
                     ->columns(2)
+                    ->nullable()
                     ->schema([
                         Forms\Components\Select::make('jenis_kejadian_id')
-                            ->relationship('jenisKejadian', 'nama')
-                            ->required(),
+                            ->relationship('jenisKejadian', 'nama'),
                         Forms\Components\TextInput::make('jumlah')
-                            ->numeric()
-                            ->required(),
+                            ->numeric(),
                     ])
                     ->collapsible()
             ]);
@@ -81,15 +81,18 @@ class StatusDaerahResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make()
-                    ->after(function ($record) {
-                        $jumlahLaporan = $record->kejadianStatusDaerah->sum('jumlah');
-                        $record->update([
-                            'jumlah_laporan' => $jumlahLaporan,
-                        ]);
-                    }),
-                Tables\Actions\DeleteAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make()
+                        ->after(function ($record) {
+                            $jumlahLaporan = $record->kejadianStatusDaerah->sum('jumlah');
+                            $record->update([
+                                'jumlah_laporan' => $jumlahLaporan,
+                            ]);
+                        }),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+                ->button()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

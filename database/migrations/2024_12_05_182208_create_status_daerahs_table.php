@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('status_daerahs', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Kelurahan::class)->constrained()->cascadeOnDelete();
-            $table->integer('jumlah_laporan');
+            $table->integer('jumlah_laporan')->default(0)->nullable();
             $table->timestamps();
         });
     }

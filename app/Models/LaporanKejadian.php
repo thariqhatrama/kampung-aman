@@ -18,6 +18,7 @@ class LaporanKejadian extends Model implements HasMedia
         // 'no_tlp',
         'lokasi_kejadian',
         'jenis_kejadian_id',
+        'kelurahan_id',
         'catatan_laporan',
         'longitude',
         'latitude',
@@ -31,5 +32,10 @@ class LaporanKejadian extends Model implements HasMedia
     public function jenisKejadian()
     {
         return $this->belongsTo(JenisKejadian::class);
+    }
+
+    public function kelurahan()
+    {
+        return $this->belongsTo(Kelurahan::class);
     }
 }

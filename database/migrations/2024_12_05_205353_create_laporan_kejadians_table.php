@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\JenisKejadian;
+use App\Models\Kelurahan;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -22,6 +23,7 @@ return new class extends Migration
             // $table->string('no_tlp');
             $table->text('lokasi_kejadian');
             $table->foreignIdFor(JenisKejadian::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Kelurahan::class)->constrained()->cascadeOnDelete();
             $table->text('catatan_laporan');
             $table->string('longitude');
             $table->string('latitude');

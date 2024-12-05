@@ -15,7 +15,7 @@ class PetaWilayah extends Page
     protected static ?string $navigationIcon = 'heroicon-o-map';
 
     public function mount(){
-        $statusDaerah = StatusDaerah::all();
+        $statusDaerah = StatusDaerah::all() ?? collect();
         $emergency = Emergency::all();
         $laporanKejadian = LaporanKejadian::all();
         $laporanKejadianAnonim = LaporanKejadianAnonim::all();
@@ -23,7 +23,7 @@ class PetaWilayah extends Page
         // dd($statusDaerah, $emergency, $laporanKejadian, $laporanKejadianAnonim);
         $statusDaerah = $statusDaerah->map(function($item){
             $kejadian = $item->kejadianStatusDaerah->map(function($item){
-                return $item->jenisKejadian->nama;
+                return $item->jenisKejadian?->nama ?? '';
             });
             return [
                 'type' => 'Feature',
@@ -46,6 +46,7 @@ class PetaWilayah extends Page
                 ]
             ];
         });
+
         $emergency = $emergency->map(function($item){
             return [
                 'type' => 'Feature',
@@ -114,7 +115,10 @@ class PetaWilayah extends Page
                 ]
             ];
         });
-        $data = $statusDaerah->merge($emergency)->merge($laporanKejadian)->merge($laporanKejadianAnonim);
+        $data = $statusDaerah
+            ->merge($emergency)
+            ->merge($laporanKejadian)
+            ->merge($laporanKejadianAnonim);
         $geoJson = [
             'type' => 'FeatureCollection',
             'features' => $data

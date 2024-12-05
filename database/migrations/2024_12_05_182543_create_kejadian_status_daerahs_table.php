@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('kejadian_status_daerahs', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(StatusDaerah::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(JenisKejadian::class)->constrained()->cascadeOnDelete();
-            $table->integer('jumlah');
+            $table->foreignIdFor(StatusDaerah::class)->nullable()->cascadeOnDelete();
+            $table->foreignIdFor(JenisKejadian::class)->nullable()->cascadeOnDelete();
+            $table->integer('jumlah')->nullable();
             $table->timestamps();
         });
     }
