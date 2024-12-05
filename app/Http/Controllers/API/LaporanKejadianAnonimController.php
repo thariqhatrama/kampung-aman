@@ -77,7 +77,9 @@ class LaporanKejadianAnonimController extends Controller
         $recipients = User::role('super_admin')->get();
         foreach($recipients as $recipient) {
             Notification::make()
-                ->title('Saved successfully')
+                ->title('Laporan Kejadian Anonim')
+                ->body('Seseorang telah melaporkan kejadian '.$laporanKejadianAnonim->jenisKejadian->nama)
+                ->info()
                 ->sendToDatabase($recipient);
         }
         

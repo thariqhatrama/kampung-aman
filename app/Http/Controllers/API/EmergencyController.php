@@ -29,7 +29,7 @@ class EmergencyController extends Controller
             ], 400);
         }
 
-        $laporanKejadianAnonim = Emergency::create([
+        $emergency = Emergency::create([
             'user_id' => $request->user()->id,
             'tanggal' => $request->tanggal,
             'jam' => $request->jam,
@@ -41,14 +41,16 @@ class EmergencyController extends Controller
         $recipients = User::role('super_admin')->get();
         foreach($recipients as $recipient) {
             Notification::make()
-                ->title('Saved successfully')
+                ->title('Emergency')
+                ->body($request->user()->name . ' telah menekan tombol emergency')
+                ->info()
                 ->sendToDatabase($recipient);
         }
 
         return response()->json([
             'error' => false,
             'message' => 'Laporan emergency berhasil disimpan',
-            'data' => $laporanKejadianAnonim,
+            'data' => $emergency,
         ]);
     }
 }
