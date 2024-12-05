@@ -2,18 +2,18 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Kelurahan;
+use App\Models\StatusDaerah;
 use Filament\Widgets\ChartWidget;
 
 class LaporanKampungChart extends ChartWidget
 {
     protected static ?string $heading = 'Jumlah Laporan berdasarkan Kampung';
-    public ?string $filter = 'today';
+    public ?string $filter = 'month';
 
     protected function getFilters(): ?array
     {
         return [
-            'today' => 'Today',
-            'week' => 'Last week',
             'month' => 'Last month',
             'year' => 'This year',
         ];
@@ -21,16 +21,29 @@ class LaporanKampungChart extends ChartWidget
 
     protected function getData(): array
     {
+        $kelurahan = Kelurahan::all();
+        if ($this->filter == 'month') {
+            $statusDaerah = StatusDaerah::whereMonth('created_at', now()->month)->get();
+        } elseif($this->filter == 'year') {
+            $statusDaerah = StatusDaerah::whereYear('created_at', now()->year)->get();
+        }else {
+            $statusDaerah = StatusDaerah::all();
+        }
+
+        $data = $kelurahan->map(function ($kelurahan) use ($statusDaerah) {
+            return $statusDaerah->where('kelurahan_id', $kelurahan->id)->sum('jumlah_laporan');
+        })->toArray();
+
         return [
             'datasets' => [
                 [
                     'label' => 'Kejadian',
-                    'data' => [0, 10, 5, 2, 21, 32, 45, 74, 65, 45, 77, 89],
+                    'data' => $data,
                     'backgroundColor' => '#36A2EB',
                     'borderColor' => '#9BD0F5',
                 ],
             ],
-            'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            'labels' => $kelurahan->pluck('nama')->toArray(),
         ];
     }
 
