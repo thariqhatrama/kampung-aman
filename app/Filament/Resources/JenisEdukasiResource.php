@@ -17,6 +17,7 @@ class JenisEdukasiResource extends Resource
 {
     protected static ?string $model = JenisEdukasi::class;
 
+    protected static ?string $navigationGroup = 'Setting';
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
     public static function form(Form $form): Form

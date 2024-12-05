@@ -4,9 +4,9 @@ namespace App\Filament\Resources\LaporanKejadianResource\Pages;
 
 use App\Filament\Resources\LaporanKejadianResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ListRecords;
+use Filament\Resources\Pages\ManageRecords;
 
-class ListLaporanKejadians extends ListRecords
+class ManageLaporanKejadians extends ManageRecords
 {
     protected static string $resource = LaporanKejadianResource::class;
 

@@ -9,3 +9,11 @@
 .fi-sidebar-item-active a:hover{
   @apply bg-orange-50 text-white;
 }
+
+.marker{
+  @apply relative flex justify-center;
+}
+
+.marker .marker-message {
+  @apply absolute -bottom-5 px-2 py-0 text-xs font-semibold text-white bg-red-500 rounded-full;
+}

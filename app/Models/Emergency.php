@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class LaporanKejadian extends Model
+class Emergency extends Model
 {
     protected $fillable = [
         'user_id',
@@ -13,19 +14,12 @@ class LaporanKejadian extends Model
         // 'nama_pelapor',
         // 'no_tlp',
         'lokasi_kejadian',
-        'jenis_kejadian_id',
-        'catatan_laporan',
         'longitude',
         'latitude',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function jenisKejadian()
-    {
-        return $this->belongsTo(JenisKejadian::class);
     }
 }

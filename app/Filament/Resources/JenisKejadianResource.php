@@ -17,6 +17,7 @@ class JenisKejadianResource extends Resource
 {
     protected static ?string $model = JenisKejadian::class;
 
+    protected static ?string $navigationGroup = 'Setting';
     protected static ?string $navigationIcon = 'heroicon-o-exclamation-triangle';
 
     public static function form(Form $form): Form

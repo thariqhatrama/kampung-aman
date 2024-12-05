@@ -4,25 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LaporanKejadian extends Model
+class LaporanKejadianAnonim extends Model
 {
     protected $fillable = [
-        'user_id',
         'tanggal',
         'jam',
-        // 'nama_pelapor',
-        // 'no_tlp',
         'lokasi_kejadian',
         'jenis_kejadian_id',
         'catatan_laporan',
         'longitude',
         'latitude',
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function jenisKejadian()
     {
