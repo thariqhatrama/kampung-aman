@@ -13,6 +13,7 @@ use App\Models\LaporanKejadianAnonim;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\LaporanKejadianAnonimResource\Pages;
 use App\Filament\Resources\LaporanKejadianAnonimResource\RelationManagers;
 
@@ -20,6 +21,7 @@ class LaporanKejadianAnonimResource extends Resource
 {
     protected static ?string $model = LaporanKejadianAnonim::class;
 
+    protected static ?int $navigationSort = 4;
     protected static ?string $navigationGroup = 'Laporan Kejadian';
     protected static ?string $navigationIcon = 'heroicon-o-clipboard';
 
@@ -46,6 +48,10 @@ class LaporanKejadianAnonimResource extends Resource
                 Forms\Components\TextInput::make('latitude')
                     ->required()
                     ->maxLength(255),
+                SpatieMediaLibraryFileUpload::make('foto')
+                    ->multiple()
+                    ->image()
+                    ->columnSpanFull()
             ]);
     }
 

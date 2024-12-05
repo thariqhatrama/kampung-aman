@@ -35,14 +35,14 @@
                 <table>
                     <tbody>
                         <tr>
+                            <td>Waktu</td>
+                            <td>: </td>
+                            <td> ${marker.properties.waktu}</td>
+                        </tr>
+                        <tr>
                             <td>Kejadian</td>
                             <td>: </td>
                             <td> ${marker.properties.kejadian}</td>
-                        </tr>
-                        <tr>
-                            <td>Uraian</td>
-                            <td>: </td>
-                            <td> ${marker.properties.waktu}</td>
                         </tr>
                     </tbody>
                 </table>

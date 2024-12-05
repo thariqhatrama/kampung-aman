@@ -20,6 +20,7 @@ class EmergencyResource extends Resource
 {
     protected static ?string $model = Emergency::class;
 
+    protected static ?int $navigationSort = 1;
     protected static ?string $navigationGroup = 'Laporan Kejadian';
     protected static ?string $navigationIcon = 'heroicon-o-bell-alert';
 

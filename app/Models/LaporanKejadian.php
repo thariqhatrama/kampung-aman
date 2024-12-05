@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class LaporanKejadian extends Model
+class LaporanKejadian extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+    
     protected $fillable = [
         'user_id',
         'tanggal',

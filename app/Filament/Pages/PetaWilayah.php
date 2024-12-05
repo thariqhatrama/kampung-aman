@@ -22,13 +22,16 @@ class PetaWilayah extends Page
 
         // dd($statusDaerah, $emergency, $laporanKejadian, $laporanKejadianAnonim);
         $statusDaerah = $statusDaerah->map(function($item){
+            $kejadian = $item->kejadianStatusDaerah->map(function($item){
+                return $item->jenisKejadian->nama;
+            });
             return [
                 'type' => 'Feature',
                 'properties'=> [
                     'id' => $item->id,
                     'tipe' => 'status-daerah',
                     'total' => $item->jumlah_laporan.'x',
-                    'kejadian' => '',
+                    'kejadian' => implode(', ', $kejadian->toArray()),
                     'waktu' => '',
                     'pelapor' => '',
                     'lokasi' => $item->kelurahan->nama,

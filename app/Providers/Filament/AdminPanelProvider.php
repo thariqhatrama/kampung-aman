@@ -73,6 +73,11 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->viteTheme('resources/css/filament/admin/theme.css');
+            ->viteTheme('resources/css/filament/admin/theme.css')
+            ->navigationGroups([
+                'Laporan Kejadian',
+                'Setting',
+                'User & Peran',
+            ]);
     }
 }

@@ -18,6 +18,7 @@ class StatusDaerahResource extends Resource
 {
     protected static ?string $model = StatusDaerah::class;
 
+    protected static ?int $navigationSort = 2;
     protected static ?string $navigationGroup = 'Laporan Kejadian';
     protected static ?string $navigationIcon = 'heroicon-o-shield-check';
 

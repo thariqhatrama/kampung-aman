@@ -14,12 +14,14 @@ use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\LaporanKejadianResource\Pages;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use App\Filament\Resources\LaporanKejadianResource\RelationManagers;
 
 class LaporanKejadianResource extends Resource
 {
     protected static ?string $model = LaporanKejadian::class;
 
+    protected static ?int $navigationSort = 3;
     protected static ?string $navigationGroup = 'Laporan Kejadian';
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
@@ -54,6 +56,10 @@ class LaporanKejadianResource extends Resource
                 Forms\Components\TextInput::make('latitude')
                     ->required()
                     ->maxLength(255),
+                SpatieMediaLibraryFileUpload::make('foto')
+                    ->multiple()
+                    ->image()
+                    ->columnSpanFull()
             ]);
     }
 
