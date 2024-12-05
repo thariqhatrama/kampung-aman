@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
+use App\Models\StatusDaerah;
 use Illuminate\Http\Request;
+use App\Models\LaporanKejadian;
 use App\Http\Controllers\Controller;
 use App\Models\KejadianStatusDaerah;
-use App\Models\LaporanKejadian;
-use App\Models\StatusDaerah;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class LaporanKejadianController extends Controller
@@ -72,6 +74,13 @@ class LaporanKejadianController extends Controller
         $jumlahLaporan = $statusDaerah->update([
             'jumlah_laporan' => $statusDaerah->kejadianStatusDaerah->sum('jumlah')
         ]);
+
+        $recipients = User::role('super_admin')->get();
+        foreach($recipients as $recipient) {
+            Notification::make()
+                ->title('Saved successfully')
+                ->sendToDatabase($recipient);
+        }
 
         return response()->json([
             'error' => false,

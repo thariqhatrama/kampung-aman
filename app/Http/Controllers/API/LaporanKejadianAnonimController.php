@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\KejadianStatusDaerah;
 use App\Models\LaporanKejadianAnonim;
+use App\Models\User;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class LaporanKejadianAnonimController extends Controller
@@ -71,6 +73,13 @@ class LaporanKejadianAnonimController extends Controller
         $jumlahLaporan = $statusDaerah->update([
             'jumlah_laporan' => $statusDaerah->kejadianStatusDaerah->sum('jumlah')
         ]);
+
+        $recipients = User::role('super_admin')->get();
+        foreach($recipients as $recipient) {
+            Notification::make()
+                ->title('Saved successfully')
+                ->sendToDatabase($recipient);
+        }
         
         return response()->json([
             'error' => false,

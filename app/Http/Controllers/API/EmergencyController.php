@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
+use App\Models\Emergency;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Emergency;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class EmergencyController extends Controller
@@ -35,6 +37,13 @@ class EmergencyController extends Controller
             'longitude' => $request->longitude,
             'latitude' => $request->latitude,
         ]);
+
+        $recipients = User::role('super_admin')->get();
+        foreach($recipients as $recipient) {
+            Notification::make()
+                ->title('Saved successfully')
+                ->sendToDatabase($recipient);
+        }
 
         return response()->json([
             'error' => false,

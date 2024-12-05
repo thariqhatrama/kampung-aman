@@ -78,6 +78,8 @@ class AdminPanelProvider extends PanelProvider
                 'Laporan Kejadian',
                 'Setting',
                 'User & Peran',
-            ]);
+            ])
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('10s');
     }
 }
